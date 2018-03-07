@@ -24,7 +24,7 @@ module TB();
 
   controller cu(.clk(clk), .rst(rst), .start(start), .done(done), .ld_s_A(ld_s_A), .ld_exp_A(ld_exp_A), .ld_man_A(ld_man_A), .ld_s_B(ld_s_B), .ld_exp_B(ld_exp_B), .ld_man_B(ld_man_B), .eq_exp(eq_exp), .lt_exp(lt_exp), .gt_exp(gt_exp), .eq_man(eq_man), .lt_man(lt_man), .gt_man(gt_man),
     .count_en_up_A(count_en_up_A), .count_en_up_B(count_en_up_B), .shift_man_right_A(shift_man_right_A), .shift_man_right_B(shift_man_right_B), .ld_exp_R(ld_exp_R), .sel_sign_R(sel_sign_R), .signA_xor_signB(signA_xor_signB), .samesign(samesign),
-    .ld_s_R(ld_s_R), .ld_man_R(ld_man_R), .co_sum(co_sum), .shift_man_right_R(shift_man_right_R), .shift_man_left_R(shift_man_left_R), .count_en_up_R(count_en_up_R), .count_en_down_R(count_en_down_R), .or_man_R(or_man_R), .most_sig_man_R(most_sig_man_R));
+    .ld_s_R(ld_s_R), .ld_man_R(ld_man_R), .co_sum(co_sum), .shift_man_right_R(shift_man_right_R), .shift_man_left_R(shift_man_left_R), .count_en_up_R(count_en_up_R), .count_en_down_R(count_en_down_R), .or_man_R(or_man_R), .most_sig_man_R(most_sig_man_R), .operator(operator));
 
 initial begin
   parin_s_A=0;

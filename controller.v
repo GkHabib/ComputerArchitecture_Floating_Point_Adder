@@ -1,10 +1,10 @@
 `timescale 1ns/1ns
 module controller(clk, rst, start, done, ld_s_A, ld_exp_A, ld_man_A, ld_s_B, ld_exp_B, ld_man_B, eq_exp, lt_exp, gt_exp, eq_man, lt_man, gt_man,
    count_en_up_A, count_en_up_B, shift_man_right_A, shift_man_right_B, ld_exp_R, sel_sign_R, signA_xor_signB, samesign,
-   ld_s_R, ld_man_R, co_sum, shift_man_right_R, shift_man_left_R, count_en_up_R, count_en_down_R, or_man_R, most_sig_man_R);
+   ld_s_R, ld_man_R, co_sum, shift_man_right_R, shift_man_left_R, count_en_up_R, count_en_down_R, or_man_R, most_sig_man_R,operator);
 
    input clk, rst, start, eq_exp, lt_exp, gt_exp, eq_man, lt_man, gt_man, signA_xor_signB, co_sum, most_sig_man_R,
-    or_man_R;
+    or_man_R, operator;
    output reg done, ld_s_A, ld_s_B, ld_s_R, ld_man_A, ld_man_B, ld_man_R, ld_exp_A, ld_exp_B, ld_exp_R,
     count_en_up_A, count_en_up_B, count_en_up_R, count_en_down_R, shift_man_right_A, shift_man_right_B,
     shift_man_right_R, shift_man_left_R;
@@ -22,7 +22,7 @@ module controller(clk, rst, start, done, ld_s_A, ld_exp_A, ld_man_A, ld_s_B, ld_
         loading: begin ns=start_comparing_exp; end
         start_comparing_exp:begin ns=(eq_exp)? load_result_exp:start_comparing_exp; end
         load_result_exp: begin ns=load_result_sign_man; end
-        load_result_sign_man: begin ns=(co_sum)? check_carry_of_result_man:check_for_zero; end
+        load_result_sign_man: begin ns=(co_sum&~operator)? check_carry_of_result_man:check_for_zero; end
         check_carry_of_result_man: begin ns=check_for_zero; end
         check_for_zero: begin ns=(or_man_R)? check_for_msb_of_result:IDLE; end
         check_for_msb_of_result: begin ns=(most_sig_man_R)? IDLE:check_for_msb_of_result; end
