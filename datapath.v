@@ -11,7 +11,8 @@ module datapath(parin_s_A, parin_s_B, parin_exp_A, parin_exp_B, parin_mant_A, pa
 
   input clk, rst, ld_s_A, ld_s_B, ld_s_R, ld_man_A, ld_man_B, ld_man_R, ld_exp_A, ld_exp_B, ld_exp_R,
     count_en_up_A, count_en_up_B, count_en_up_R, count_en_down_R, shift_man_right_A, shift_man_right_B,
-    shift_man_right_R, shift_man_left_R, sel_sign_R, samesign;
+    shift_man_right_R, shift_man_left_R, samesign;
+  input [1:0] sel_sign_R;
 
   input parin_s_A, parin_s_B, operator;
   input [7:0] parin_exp_A, parin_exp_B;
@@ -22,7 +23,6 @@ module datapath(parin_s_A, parin_s_B, parin_exp_A, parin_exp_B, parin_mant_A, pa
   wire [23:0] mant_outA, mant_outB;
 
   wire parin_s_R;
-  wire [7:0] parin_exp_R;
   wire [23:0] parin_mant_R;
 
   flipFlop S_A(.clk(clk), .rst(rst), .ld_s(ld_s_A), .parin_s(parin_s_A), .s_out(s_outA));
@@ -44,15 +44,15 @@ module datapath(parin_s_A, parin_s_B, parin_exp_A, parin_exp_B, parin_mant_A, pa
   wire [23:0] sub_man_AB;
   subtractor24 SUB_MAN_AB(.a(mant_outA), .b(mant_outB), .sub(sub_man_AB));
 
-  mux2to1 MUX_ON_MANT(.a(sum_man_AB), .b(sub_man_AB), .select(samesign), .mux_out(parin_shift_R));
+  mux2to1 MUX_ON_MANT(.a(sum_man_AB), .b(sub_man_AB), .select(samesign), .mux_out(parin_mant_R));
 
-  mux4to1 MUX_ON_SIGN(.a(2'b00), .b(s_outA), .c(s_outB), .d(2'b11), .select(sel_sign_R), .mux_out(parin_mant_R));
+  mux4to1 MUX_ON_SIGN(.a(1'b0), .b(s_outA), .c(s_outB), .d(1'b1), .select(sel_sign_R), .mux_out(parin_s_R));
 
   flipFlop S_R(.clk(clk), .rst(rst), .ld_s(ld_s_R), .parin_s(parin_s_R), .s_out(s_outR));
-  udCounter EXP_R(.clk(clk), .rst(rst), .ld_exp(ld_exp_R), .cen_up_exp(count_en_up_R), .cen_down_exp(count_en_down_R), .parin_exp(parin_exp_R), .exp_out(exp_outR));
+  udCounter EXP_R(.clk(clk), .rst(rst), .ld_exp(ld_exp_R), .cen_up_exp(count_en_up_R), .cen_down_exp(count_en_down_R), .parin_exp(exp_outA), .exp_out(exp_outR));
   shiftReg24 MANT_R(.clk(clk), .rst(rst), .ld_mantice(ld_man_R), .shift_right(shift_man_right_R), .shift_left(shift_man_left_R), .parin_mantice(parin_mant_R), .mantice_out(mant_outR));
   assign most_sig_man_R = mant_outR[23];
-
+  assign or_man_R = |{mant_outR};
 
 
 endmodule
