@@ -13,7 +13,8 @@ module TB();
     count_en_up_A, count_en_up_B, shift_man_right_A, shift_man_right_B, ld_exp_R, signA_xor_signB, samesign,ld_s_R,
     ld_man_R, co_sum, shift_man_right_R, shift_man_left_R, count_en_up_R, count_en_down_R, or_man_R, most_sig_man_R;
   wire [1:0] sel_sign_R;
-  reg start=0, done;
+  reg start=0;
+  wire done;
 
 
   datapath dp(.parin_s_A(parin_s_A), .parin_s_B(parin_s_B), .parin_exp_A(parin_exp_A), .parin_exp_B(parin_exp_B), .parin_mant_A(parin_mant_A), .parin_mant_B(parin_mant_B), .operator(operator), .s_outR(s_outR), .exp_outR(exp_outR), .mant_outR(mant_outR),
@@ -32,11 +33,29 @@ initial begin
   parin_s_B=0;
   parin_exp_B  = 8'b00000001;
   parin_mant_B = 24'b100000000000000000000000;
-  operator = 0;
+  operator = 1;
+  clk = 0; rst = 1;
   #100;
+  clk = 1;
+  #100;
+  clk = 0;
+  #100;
+  rst = 0;
+  #100;
+  clk =1;
   start = 1;
   #100;
+  clk = 0;
+  #100;
+  clk = 1;
+  #100;
   start = 0;
+  #100;
+  clk = 0;
+  #100;
+  clk = 1;
+  #100;
+
 end
 initial repeat(30) #100 clk = ~clk;
 endmodule
