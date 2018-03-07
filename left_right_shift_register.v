@@ -1,3 +1,4 @@
+`timescale 1ns/1ns
 
 module shiftReg24(clk, rst, ld_mantice, shift_right, shift_left, parin_mantice, mantice_out );
   input clk, rst, ld_mantice, shift_right, shift_left;

@@ -1,3 +1,4 @@
+`timescale 1ns/1ns
 
 module udCounter(clk, rst, ld_exp, cen_up_exp, cen_down_exp, parin_exp, exp_out);
   input clk, rst, ld_exp, cen_up_exp, cen_down_exp;

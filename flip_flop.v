@@ -1,3 +1,5 @@
+`timescale 1ns/1ns
+
 module flipFlop(clk, rst, ld_s, parin_s, s_out);
   input clk, rst, ld_s;
   input parin_s;

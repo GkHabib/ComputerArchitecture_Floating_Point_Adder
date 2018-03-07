@@ -1,3 +1,5 @@
+`timescale 1ns/1ns
+
 module mux4to1(a, b, c, d, select, mux_out);
   input a, b, c, d;
   input[1:0] select;
