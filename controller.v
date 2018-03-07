@@ -3,7 +3,7 @@ module controller(CLK, rst, start, done, ld_s_A, ld_exp_A, ld_man_A, ld_s_B, ld_
    count_en_up_A, count_en_up_B, shift_man_right_A, shift_man_right_B, ld_exp_R, sel_sign_R, signA_xor_signB, samesign,
    ld_s_R, ld_man_R, co_sum, shift_man_right_R, shift_man_left_R, count_en_up_R, count_en_down_R, or_man_R, most_sig_man_R);
 
-   input start, eq_exp, lt_exp, gt_exp, eq_man, lt_man, gt_man, signA_xor_signB, co_sum, most_sig_man_R
+   input CLK, rst, start, eq_exp, lt_exp, gt_exp, eq_man, lt_man, gt_man, signA_xor_signB, co_sum, most_sig_man_R
     or_man_R;
    output done, ld_s_A, ld_s_B, ld_s_R, ld_man_A, ld_man_B, ld_man_R, ld_exp_A, ld_exp_B, ld_exp_R,
     count_en_up_A, count_en_up_B, count_en_up_R, count_en_down_R, shift_man_right_A, shift_man_right_B,
