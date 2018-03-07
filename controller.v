@@ -3,13 +3,14 @@ module controller(CLK, rst, start, done, ld_s_A, ld_exp_A, ld_man_A, ld_s_B, ld_
    count_en_up_A, count_en_up_B, shift_man_right_A, shift_man_right_B, ld_exp_R, sel_sign_R, signA_xor_signB, samesign,
    ld_s_R, ld_man_R, co_sum, shift_man_right_R, shift_man_left_R, count_en_up_R, count_en_down_R, or_man_R, most_sig_man_R);
 
-   input CLK, rst, start, eq_exp, lt_exp, gt_exp, eq_man, lt_man, gt_man, signA_xor_signB, co_sum, most_sig_man_R
+   input CLK, rst, start, eq_exp, lt_exp, gt_exp, eq_man, lt_man, gt_man, signA_xor_signB, co_sum, most_sig_man_R,
     or_man_R;
-   output done, ld_s_A, ld_s_B, ld_s_R, ld_man_A, ld_man_B, ld_man_R, ld_exp_A, ld_exp_B, ld_exp_R,
+   output reg done, ld_s_A, ld_s_B, ld_s_R, ld_man_A, ld_man_B, ld_man_R, ld_exp_A, ld_exp_B, ld_exp_R,
     count_en_up_A, count_en_up_B, count_en_up_R, count_en_down_R, shift_man_right_A, shift_man_right_B,
-    shift_man_right_R, shift_man_left_R, samesign;
-    output [1:0] sel_sign_R;
-    logic [3:0] ps,ns;
+    shift_man_right_R, shift_man_left_R;
+    output samesign;
+    output reg [1:0] sel_sign_R;
+    reg [3:0] ps,ns;
     parameter [3:0] IDLE=0, starting=1, loading=2, start_comparing_exp=3, load_result_exp=4, load_result_sign_man=5,
      check_carry_of_result_man=6, check_for_zero=7, check_for_msb_of_result=8;
     always@(start, eq_exp, co_sum, or_man_R, most_sig_man_R) begin
@@ -29,7 +30,7 @@ module controller(CLK, rst, start, done, ld_s_A, ld_exp_A, ld_man_A, ld_s_B, ld_
     always@(ps) begin
       done=0; ld_s_A=0; ld_s_B=0; ld_s_R=0; ld_man_A=0; ld_man_B=0; ld_man_R=0; ld_exp_A=0; ld_exp_B=0; ld_exp_R=0;
       count_en_up_A=0; count_en_up_B=0; count_en_up_R=0; count_en_down_R=0; shift_man_right_A=0; shift_man_right_B=0;
-      shift_man_right_R=0; shift_man_left_R=0; samesign=0; sel_sign_R=2'b0;
+      shift_man_right_R=0; shift_man_left_R=0; sel_sign_R=2'b0;
       case(ps)
         IDLE: begin done=1; end
         starting:begin  end
@@ -51,7 +52,7 @@ module controller(CLK, rst, start, done, ld_s_A, ld_exp_A, ld_man_A, ld_s_B, ld_
         check_for_msb_of_result: begin count_en_down_R=1; shift_man_left_R=1; end
         default: begin done=0; ld_s_A=0; ld_s_B=0; ld_s_R=0; ld_man_A=0; ld_man_B=0; ld_man_R=0; ld_exp_A=0; ld_exp_B=0;
         ld_exp_R=0; count_en_up_A=0; count_en_up_B=0; count_en_up_R=0; count_en_down_R=0; shift_man_right_A=0; shift_man_right_B=0;
-        shift_man_right_R=0; shift_man_left_R=0; samesign=0; sel_sign_R=2'b0; end
+        shift_man_right_R=0; shift_man_left_R=0; sel_sign_R=2'b0; end
       endcase
   end
   always@(posedge CLK, posedge rst) begin
